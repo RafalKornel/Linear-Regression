@@ -14,6 +14,7 @@ epochs = 1000
 learning_rate = 0.001
 visualization = True
 snap_freq = 10
+batch_size = 5
 
 # Load file and assign features and lables
 _file = pl.loadtxt('input_file.txt')
@@ -27,9 +28,10 @@ print("Randomly generated slope:{0} and bias:{1} ".format(rand_a, rand_b))
 
 
 # Initialize model, pass arguments, start learning
-test = Model(x, y, learning_rate, visualization, epochs, bias = rand_b, slope = rand_a, frequency = snap_freq)
+test = Model(x, y, learning_rate, batch_size, visualization, epochs, bias = rand_b, slope = rand_a, frequency = snap_freq)
 test.learn()
 
+#print(test.pick_random_batch(4))
 print("Result slope:{0} and bias:{1} ".format(test.slope, test.bias))
 
 # Visualization - generating plot and gif file
