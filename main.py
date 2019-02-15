@@ -11,16 +11,24 @@ from matplotlib import pylab as pl
 
 # Parameters:
 epochs = 1000
-learning_rate = 0.001
-visualization = True
+learning_rate = 0.000000001
+visualization = False
 snap_freq = 10
-batch_size = 5
+batch_size = 1000
 
 
 # Load file and assign features and lables
-_file = pl.loadtxt('input_file.txt')
-x = _file[:, 0]
-y = _file[:, 1]
+
+#_file = pl.loadtxt('input_file.txt')
+#x = _file[:, 0]
+#y = _file[:, 1]
+
+data = pd.read_csv('california_housing_train.csv', sep = ',')
+features = data['total_rooms']
+labels = data['median_house_value'] / 1000.0
+
+x = list(features.values)
+y = list(labels.values)
 
 
 # Randomly generate slope and bias values
@@ -37,9 +45,10 @@ test.learn()
 # Visualization - generating plot and gif file
 f = lambda x, a, b: a * x + b
 
+print("Result slope:{0} and bias:{1} ".format(test.slope, test.bias))
+test.plot_model(show_plot = True)
+
 if visualization == True:
-    print("Result slope:{0} and bias:{1} ".format(test.slope, test.bias))
-    test.plot_model(show_plot = True)
 
     images = []
     for filename in sorted(os.listdir('shots/'), key = lambda x : int(x[0:-4:])):
